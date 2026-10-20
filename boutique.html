@@ -766,7 +766,7 @@ async function loadPosData() {
       if (matched !== BOUTIQUE_NAME || !date || !total) continue;
       if (!daily[date]) daily[date] = { ca: 0, count: 0 };
       daily[date].ca += total;
-      // Onglet « Pos order » agrégé (date, point de vente, CA TTC, tickets) : la 4e colonne donne le nombre de tickets
+      // Onglet « Pos order » agrégé (date, point de vente, CA HT, tickets) : la 4e colonne donne le nombre de tickets
       const tickets = fields.length > 3 ? pN(fields[3]) : 0;
       daily[date].count += tickets > 0 ? tickets : 1;
     }
@@ -1171,7 +1171,7 @@ function renderOverview() {
     { id:'ov-imp', label:'Impressions totales', value: D.totalImp, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F19D76" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>', iconBg:'var(--coral-glow)', color:'var(--coral)' },
     { id:'ov-clics', label:'Clics totaux', value: D.totalClics, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e8a0b4" stroke-width="2"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>', iconBg:'var(--rose-glow)', color:'var(--rose)' },
     { id:'ov-spend', label:'Depenses totales', value: D.totalSpend, suffix:' €', icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f1dbcf" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', iconBg:'var(--beige-glow)', color:'var(--beige)' },
-    { id:'ov-ca', label:'CA TTC', value: D.totalCA, suffix:' €', icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5bcf8a" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>', iconBg:'var(--gmb-glow)', color:'var(--gmb)' },
+    { id:'ov-ca', label:'CA HT', value: D.totalCA, suffix:' €', icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5bcf8a" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>', iconBg:'var(--gmb-glow)', color:'var(--gmb)' },
     { id:'ov-rating', label:'Note Google', value: D.gmbRating, suffix:'/5', decimals:1, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="#f6c95b" stroke="#f6c95b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', iconBg:'var(--google-glow)', color:'var(--google)' },
     { id:'ov-conv', label:'Conversions Google', value: D.totalGoogleConv, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5b9cf6" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>', iconBg:'var(--meta-glow)', color:'var(--meta)' }
   ]);
@@ -1465,7 +1465,7 @@ function renderGMB() {
     { id:'gmb-itin', label:'Itineraires', value: D.totalGmbItineraires, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F19D76" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>', iconBg:'var(--coral-glow)', color:'var(--coral)' },
     { id:'gmb-vis', label:'Visites site web', value: D.totalGmbVisites, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e8a0b4" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>', iconBg:'var(--rose-glow)', color:'var(--rose)' },
     { id:'gmb-note', label:'Note moyenne', value: D.gmbRating, suffix:'/5', decimals:1, icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="#f6c95b" stroke="#f6c95b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', iconBg:'var(--google-glow)', color:'var(--google)' },
-    { id:'gmb-ca', label:'CA TTC', value: D.totalCA, suffix:' €', icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5bcf8a" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', iconBg:'var(--gmb-glow)', color:'var(--gmb)' }
+    { id:'gmb-ca', label:'CA HT', value: D.totalCA, suffix:' €', icon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5bcf8a" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', iconBg:'var(--gmb-glow)', color:'var(--gmb)' }
   ]);
 
   destroyChart('chart-gmb-imp');

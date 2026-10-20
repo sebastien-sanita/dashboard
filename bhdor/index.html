@@ -1054,9 +1054,9 @@
     </div>
     <div class="charts-grid">
         <div class="chart-card">
-            <h3>Chiffre d'affaires TTC</h3>
+            <h3>Chiffre d'affaires HT</h3>
             <div class="chart-sub">Ventes en caisse, toutes boutiques</div>
-            <div class="chart-box"><canvas id="chartCA" aria-label="Chiffre d'affaires TTC du réseau"></canvas></div>
+            <div class="chart-box"><canvas id="chartCA" aria-label="Chiffre d'affaires HT du réseau"></canvas></div>
         </div>
         <div class="chart-card">
             <h3>Investissement publicitaire</h3>
@@ -1118,10 +1118,10 @@ function renderKPIs(T, N, active) {
         <div class="kpi-card"><div class="kpi-label">Impressions publicitaires</div><div class="kpi-value">${B.fmtShort(N.imp)}</div><div class="kpi-detail">${B.fmtNum(N.imp)} — META + Google Ads</div></div>
         <div class="kpi-card"><div class="kpi-label">Clics publicitaires</div><div class="kpi-value">${B.fmtShort(N.clics)}</div><div class="kpi-detail">${B.fmtNum(N.clics)} — META + Google Ads</div></div>
         <div class="kpi-card"><div class="kpi-label">Investissement publicitaire</div><div class="kpi-value">${B.fmtEur(N.dep)}</div><div class="kpi-detail">META ${B.fmtEur(N.meta_dep)} · Google ${B.fmtEur(N.google_dep)}</div></div>
-        <div class="kpi-card"><div class="kpi-label">Chiffre d'affaires</div><div class="kpi-value">${N.ca >= 1e4 ? B.fmtShort(N.ca) + '€' : B.fmtEur(N.ca)}</div><div class="kpi-detail">${B.fmtEur(N.ca)} CA TTC</div></div>`;
+        <div class="kpi-card"><div class="kpi-label">Chiffre d'affaires</div><div class="kpi-value">${N.ca >= 1e4 ? B.fmtShort(N.ca) + '€' : B.fmtEur(N.ca)}</div><div class="kpi-detail">${B.fmtEur(N.ca)} CA HT</div></div>`;
     document.getElementById('kpiHeroSub').innerHTML = `
         <div class="kpi-card"><div class="kpi-label">Passages en caisse</div><div class="kpi-value">${B.fmtNum(N.tickets)}</div><div class="kpi-detail">tickets en boutique</div></div>
-        <div class="kpi-card"><div class="kpi-label">Panier moyen</div><div class="kpi-value">${N.tickets > 0 ? B.fmtDec(N.panier, 1) + ' €' : '—'}</div><div class="kpi-detail">CA TTC / passages en caisse</div></div>
+        <div class="kpi-card"><div class="kpi-label">Panier moyen</div><div class="kpi-value">${N.tickets > 0 ? B.fmtDec(N.panier, 1) + ' €' : '—'}</div><div class="kpi-detail">CA HT / passages en caisse</div></div>
         <div class="kpi-card"><div class="kpi-label">Visites site web</div><div class="kpi-value">${B.fmtNum(N.visites)}</div><div class="kpi-detail">pages boutique (GA4)</div></div>
         <div class="kpi-card"><div class="kpi-label">Boutiques actives</div><div class="kpi-value">${active} / ${T.length}</div><div class="kpi-detail">avec ventes sur la période</div></div>`;
 }
@@ -1140,10 +1140,10 @@ function renderCharts() {
     destroyChart('chartCA');
     charts.chartCA = new Chart(document.getElementById('chartCA'), {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'CA TTC', data: B.seriesSumOf(L, 'ca', bk), backgroundColor: 'rgba(241,157,118,0.65)', borderColor: '#F19D76', borderWidth: 1, borderRadius: 4, maxBarThickness: 46 }] },
+        data: { labels, datasets: [{ label: 'CA HT', data: B.seriesSumOf(L, 'ca', bk), backgroundColor: 'rgba(241,157,118,0.65)', borderColor: '#F19D76', borderWidth: 1, borderRadius: 4, maxBarThickness: 46 }] },
         options: {
             responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false }, tooltip: { callbacks: { title: titleCb, label: c => ' CA TTC : ' + B.fmtEur(c.parsed.y) } } },
+            plugins: { legend: { display: false }, tooltip: { callbacks: { title: titleCb, label: c => ' CA HT : ' + B.fmtEur(c.parsed.y) } } },
             scales: { x: scaleOpts, y: { ...scaleOpts, beginAtZero: true, ticks: { ...scaleOpts.ticks, callback: eurTick } } }
         }
     });
@@ -1203,7 +1203,7 @@ function cardHTML(b, d) {
     const n1 = d.ca_n1 > 0 ? `<div class="detail-metric"><div class="dm-val" style="color:${d.ca >= d.ca_n1 ? 'var(--gmb-green)' : '#ef8a87'}">${(d.ca >= d.ca_n1 ? '+' : '') + B.fmtDec((d.ca / d.ca_n1 - 1) * 100, 1)} %</div><div class="dm-label">vs N-1</div></div>` : '';
     const sales = `
         <div class="detail-grid ${n1 ? 'cols-4' : 'cols-3'}">
-            <div class="detail-metric"><div class="dm-val">${B.fmtEur(d.ca)}</div><div class="dm-label">CA TTC</div></div>
+            <div class="detail-metric"><div class="dm-val">${B.fmtEur(d.ca)}</div><div class="dm-label">CA HT</div></div>
             <div class="detail-metric"><div class="dm-val">${B.fmtNum(d.tickets)}</div><div class="dm-label">Passages</div></div>
             <div class="detail-metric"><div class="dm-val">${d.tickets > 0 ? B.fmtDec(d.panier, 1) + ' €' : '—'}</div><div class="dm-label">Panier moyen</div></div>
             ${n1}
@@ -1256,7 +1256,7 @@ function toggleCard(card) {
 /* ═══ CLASSEMENT ═══ */
 const COLS = [
     { key: 'name', label: 'Boutique', fmt: (v, d) => d.name },
-    { key: 'ca', label: 'CA TTC', fmt: v => B.fmtEur(v), bar: true },
+    { key: 'ca', label: 'CA HT', fmt: v => B.fmtEur(v), bar: true },
     { key: 'tickets', label: 'Passages', fmt: v => B.fmtNum(v) },
     { key: 'panier', label: 'Panier moyen', fmt: v => v > 0 ? B.fmtDec(v, 1) + ' €' : '—' },
     { key: 'visites', label: 'Visites site', fmt: v => B.fmtNum(v) },

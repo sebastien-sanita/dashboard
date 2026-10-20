@@ -399,7 +399,7 @@ tbody tr:hover{background:rgba(241,157,118,.03)}
       <div class="portal-kpi"><div class="portal-kpi-val" id="pk-imp">--</div><div class="portal-kpi-lbl">Impressions</div></div>
       <div class="portal-kpi"><div class="portal-kpi-val" id="pk-clicks">--</div><div class="portal-kpi-lbl">Clics</div></div>
       <div class="portal-kpi"><div class="portal-kpi-val" id="pk-spend">--</div><div class="portal-kpi-lbl">Investissement pub</div></div>
-      <div class="portal-kpi"><div class="portal-kpi-val" id="pk-ca">--</div><div class="portal-kpi-lbl">CA TTC</div></div>
+      <div class="portal-kpi"><div class="portal-kpi-val" id="pk-ca">--</div><div class="portal-kpi-lbl">CA HT</div></div>
     </div>
     <div class="portal-note" id="portal-note">Cumul 2026</div>
 
@@ -495,7 +495,7 @@ tbody tr:hover{background:rgba(241,157,118,.03)}
         <div class="chart-card"><h3>CLICS PUBLICITAIRES</h3><div class="chart-box"><canvas id="chart-overview-clicks"></canvas></div></div>
         <div class="chart-card"><h3>DÉPENSES PUBLICITAIRES (EUR)</h3><div class="chart-box"><canvas id="chart-overview-spend"></canvas></div></div>
       </div>
-      <div class="chart-row full"><div class="chart-card"><h3>CHIFFRE D'AFFAIRES TTC — BOUTIQUE</h3><div class="chart-box"><canvas id="chart-overview-ca"></canvas></div></div></div>
+      <div class="chart-row full"><div class="chart-card"><h3>CHIFFRE D'AFFAIRES HT — BOUTIQUE</h3><div class="chart-box"><canvas id="chart-overview-ca"></canvas></div></div></div>
     </div>
 
     <!-- META -->
@@ -559,14 +559,14 @@ tbody tr:hover{background:rgba(241,157,118,.03)}
       <div id="sales-empty"></div>
       <div id="sales-content">
         <div class="kpi-grid c5" id="sales-kpis"></div>
-        <div class="chart-row full"><div class="chart-card"><h3>CHIFFRE D'AFFAIRES TTC</h3><div class="chart-box"><canvas id="chart-sales-ca"></canvas></div></div></div>
+        <div class="chart-row full"><div class="chart-card"><h3>CHIFFRE D'AFFAIRES HT</h3><div class="chart-box"><canvas id="chart-sales-ca"></canvas></div></div></div>
         <div class="chart-row">
           <div class="chart-card"><h3>PASSAGES EN CAISSE</h3><div class="chart-box"><canvas id="chart-sales-tickets"></canvas></div></div>
           <div class="chart-card"><h3>PANIER MOYEN (EUR)</h3><div class="chart-box"><canvas id="chart-sales-basket"></canvas></div></div>
         </div>
         <div class="chart-row">
           <div class="chart-card"><h3>CA MOYEN PAR JOUR DE LA SEMAINE</h3><div class="chart-sub">Moyenne sur les jours avec ventes de la période</div><div class="chart-box"><canvas id="chart-sales-weekday"></canvas></div></div>
-          <div class="table-card" style="margin-bottom:0"><h3>DÉTAIL MENSUEL</h3><table class="month-table"><thead><tr><th>Mois</th><th class="num">CA TTC</th><th class="num">Passages</th><th class="num">Panier moyen</th><th class="num">vs N-1</th></tr></thead><tbody id="sales-months"></tbody><tfoot id="sales-months-foot"></tfoot></table></div>
+          <div class="table-card" style="margin-bottom:0"><h3>DÉTAIL MENSUEL</h3><table class="month-table"><thead><tr><th>Mois</th><th class="num">CA HT</th><th class="num">Passages</th><th class="num">Panier moyen</th><th class="num">vs N-1</th></tr></thead><tbody id="sales-months"></tbody><tfoot id="sales-months-foot"></tfoot></table></div>
         </div>
       </div>
     </div>
@@ -758,7 +758,7 @@ function renderOverview() {
     K('ov-imp', 'Impressions totales', t.imp, 'eye', 'var(--coral)', 'var(--coral-glow)', { sub: t.google_imp > 0 ? 'Meta ' + B.fmtNum(t.meta_imp) + ' · Google ' + B.fmtNum(t.google_imp) : 'Meta Ads' }),
     K('ov-clics', 'Clics totaux', t.clics, 'click', 'var(--rose)', 'var(--rose-glow)'),
     K('ov-spend', 'Dépenses pub', t.dep, 'euro', 'var(--beige)', 'var(--beige-glow)', { suffix: ' €' }),
-    K('ov-ca', 'CA TTC boutique', t.ca, 'bars', 'var(--gmb)', 'var(--gmb-glow)', { suffix: ' €' }),
+    K('ov-ca', 'CA HT boutique', t.ca, 'bars', 'var(--gmb)', 'var(--gmb-glow)', { suffix: ' €' }),
     K('ov-tk', 'Passages en caisse', t.tickets, 'bag', 'var(--meta)', 'var(--meta-glow)'),
     K('ov-basket', 'Panier moyen', t.panier, 'check', 'var(--google)', 'var(--google-glow)', { suffix: ' €', decimals: 1, text: t.tickets > 0 ? '' : '—' })
   ]);
@@ -774,7 +774,7 @@ function renderOverview() {
   makeChart('chart-overview-imp', 'bar', [barDs('Meta Ads', S('meta_imp'), C.meta)].concat(g ? [barDs('Google Ads', S('google_imp'), C.google)] : []), B.fmtNum);
   makeChart('chart-overview-clicks', 'line', [lineDs('Meta', S('meta_clics'), C.meta)].concat(g ? [lineDs('Google', S('google_clics'), C.google)] : []), B.fmtNum);
   makeChart('chart-overview-spend', 'bar', [barDs('Meta', S('meta_dep'), C.meta)].concat(g ? [barDs('Google', S('google_dep'), C.google)] : []), B.fmtEur2, { stacked: true, tick: eurTick });
-  makeChart('chart-overview-ca', 'bar', [barDs('CA TTC', S('ca'), C.gmb)], B.fmtEur, { tick: eurTick });
+  makeChart('chart-overview-ca', 'bar', [barDs('CA HT', S('ca'), C.gmb)], B.fmtEur, { tick: eurTick });
 }
 
 /* ── Meta ── */
@@ -864,13 +864,13 @@ function renderSales() {
   const vs = t.ca_n1 > 0 ? (t.ca / t.ca_n1 - 1) * 100 : NaN;
   const caJour = t.jours_ouverts > 0 ? t.ca / t.jours_ouverts : 0;
   renderKPIs('sales-kpis', [
-    K('s-ca', 'CA TTC', t.ca, 'bars', 'var(--gmb)', 'var(--gmb-glow)', { suffix: ' €', sub: isNaN(vs) ? '' : (vs >= 0 ? '+' : '') + B.fmtDec(vs, 1) + ' % vs N-1', subCls: 'vs ' + (vs >= 0 ? 'pos' : 'neg') }),
+    K('s-ca', 'CA HT', t.ca, 'bars', 'var(--gmb)', 'var(--gmb-glow)', { suffix: ' €', sub: isNaN(vs) ? '' : (vs >= 0 ? '+' : '') + B.fmtDec(vs, 1) + ' % vs N-1', subCls: 'vs ' + (vs >= 0 ? 'pos' : 'neg') }),
     K('s-tk', 'Passages en caisse', t.tickets, 'bag', 'var(--meta)', 'var(--meta-glow)'),
     K('s-basket', 'Panier moyen', t.panier, 'check', 'var(--google)', 'var(--google-glow)', { suffix: ' €', decimals: 1, text: t.tickets > 0 ? '' : '—' }),
     K('s-days', 'Jours avec ventes', t.jours_ouverts, 'cal', 'var(--rose)', 'var(--rose-glow)'),
     K('s-caday', 'CA moyen / jour', caJour, 'euro', 'var(--coral)', 'var(--coral-glow)', { suffix: ' €' })
   ]);
-  makeChart('chart-sales-ca', 'bar', [barDs('CA TTC', S('ca'), C.gmb)].concat(t.ca_n1 > 0 ? [barDs('CA TTC N-1', S('ca_n1'), C.beige)] : []), B.fmtEur, { tick: eurTick });
+  makeChart('chart-sales-ca', 'bar', [barDs('CA HT', S('ca'), C.gmb)].concat(t.ca_n1 > 0 ? [barDs('CA HT N-1', S('ca_n1'), C.beige)] : []), B.fmtEur, { tick: eurTick });
   makeChart('chart-sales-tickets', 'bar', [barDs('Passages', S('tickets'), C.meta)], B.fmtNum);
   const ca = S('ca'), tk = S('tickets');
   makeChart('chart-sales-basket', 'line', [lineDs('Panier moyen', ca.map((v, i) => tk[i] > 0 ? v / tk[i] : null), C.google)], v => B.fmtDec(v, 1) + ' €', { tick: v => v + ' €' });
